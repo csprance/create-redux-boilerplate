@@ -1,0 +1,28 @@
+{
+  "name": "create-redux-boilerplate",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "Chris Sprance <chrissprance@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src --name testFeature",
+    "build": "tsc --module commonjs",
+    "lint": "tslint --project tsconfig.json --force"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/node": "^10.12.19",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.4.0-dev.20190129"
+  },
+  "dependencies": {
+    "change-case": "^3.1.0",
+    "commander": "^2.19.0"
+  }
+}
