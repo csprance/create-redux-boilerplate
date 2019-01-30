@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import { pascalCase } from 'change-case';
 import commander from 'commander';
 import * as fs from 'fs';

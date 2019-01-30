@@ -2,7 +2,8 @@
 > Just a really small module to create a state item for redux
 
 ## Instructions
-* `node dist --name todo`
+* install package `yarn add create-redux-boilerplate --dev`
+* run command `create-redux-boilerplate --name todo`
 * Creates a folder with `ts` files
 ```
 todo/index.ts
