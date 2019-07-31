@@ -3,22 +3,20 @@ export default (
 ) => `import { getType } from 'typesafe-actions';
 
 import { actions, Types } from './index';
+import default${ClassCase}State from './state';
 
 export default (
-  state: Types.State = [],
+  state: Types.${ClassCase}State = default${ClassCase}State,
   action: Types.${ClassCase}Actions
-): Types.State => {
+): Types.${ClassCase}State => {
   switch (action.type) {
-    case getType(actions.hydrate${ClassCase}sFromDB.success):
-      return [...action.payload];
-
-    case getType(actions.add${ClassCase}.success):
-      return [...action.payload];
-
-    case getType(actions.remove${ClassCase}.success):
-      return [...action.payload];
-
-    case getType(actions.toggle${ClassCase}.success):
+    case getType(actions.standardAction):
+      return [...state];
+      
+    case getType(actions.standardActionParams):
+      return state.map(item => ({...item, active: action.payload === item.id}));
+      
+    case getType(actions.asyncAction${ClassCase}.success):
       return [...action.payload];
 
     default:

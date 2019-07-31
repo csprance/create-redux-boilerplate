@@ -1,8 +1,12 @@
 #! /usr/bin/env node
-import { pascalCase } from 'change-case';
-import commander from 'commander';
+import { camelCase, pascalCase } from 'change-case';
 import * as fs from 'fs';
+import * as inquirer from 'inquirer';
+import * as mkdirp from 'mkdirp';
 
+import createReducerTestingFileString from './template/__tests__/reducer.spec';
+import createSelectorsTestingFileString from './template/__tests__/selectors.spec';
+import createUtilTestingFileString from './template/__tests__/utils.spec';
 import createActionFileString from './template/actions';
 import createIndexFileString from './template/index';
 import createReducerFileString from './template/reducer';
@@ -11,61 +15,53 @@ import createStateFileString from './template/state';
 import createTypesFileString from './template/types';
 import createUtilFileString from './template/utils';
 
-const program = commander
-  .version('1.0.')
-  .option('-n, --name [name]', 'What the name of the state should be', 'todo')
-  .parse(process.argv);
-const classCase: string = pascalCase((program.name as any) as string);
-const lowerCase = (program.name as any) as string;
-fs.mkdirSync(lowerCase, { recursive: true });
-fs.writeFile(
-  lowerCase + '/actions.ts',
-  createActionFileString(classCase, lowerCase),
-  () => {
-    console.log('Created action file');
-  }
-);
+(async () => {
+  const { name }: { name: string } = await inquirer.prompt([
+    { name: 'name', message: 'What is the feature name?: ' }
+  ]);
+  const { path }: { path: string } = await inquirer.prompt([
+    {
+      default: `src/redux/${name}`,
+      message: 'Where should we create the state folder: ',
+      name: 'path'
+    }
+  ]);
+  const ClassCaseName: string = pascalCase(name);
+  const camelCaseName = camelCase(name);
 
-fs.writeFile(
-  lowerCase + '/index.ts',
-  createIndexFileString(), () => {
-  console.log('Created index file');
-});
+  mkdirp.sync(path);
+  mkdirp.sync(path + "/__tests__");
 
-fs.writeFile(
-  lowerCase + '/reducer.ts',
-  createReducerFileString(classCase),
-  () => {
-    console.log('Created reducer file');
-  }
-);
-
-fs.writeFile(
-  lowerCase + '/selectors.ts',
-  createSelectorsFileString(classCase, lowerCase),
-  () => {
-    console.log('Created selector file');
-  }
-);
-
-fs.writeFile(
-  lowerCase + '/state.ts',
-  createStateFileString(), () => {
-  console.log('Created state file');
-});
-
-fs.writeFile(
-  lowerCase + '/types.ts',
-  createTypesFileString(classCase, lowerCase),
-  () => {
-    console.log('Created types file');
-  }
-);
-
-fs.writeFile(
-  lowerCase + '/utils.ts',
-  createUtilFileString(classCase, lowerCase),
-  () => {
-    console.log('Created utils file');
-  }
-);
+  const files = [
+    [
+      path + '/actions.ts',
+      createActionFileString(ClassCaseName, camelCaseName)
+    ],
+    [path + '/index.ts', createIndexFileString(ClassCaseName, camelCaseName)],
+    [path + '/reducer.ts', createReducerFileString(ClassCaseName)],
+    [
+      path + '/selectors.ts',
+      createSelectorsFileString(ClassCaseName, camelCaseName)
+    ],
+    [path + '/state.ts', createStateFileString(ClassCaseName, camelCaseName)],
+    [path + '/types.ts', createTypesFileString(ClassCaseName, camelCaseName)],
+    [path + '/utils.ts', createUtilFileString(ClassCaseName, camelCaseName)],
+    [
+      path + '/__tests__/reducer.spec.ts',
+      createReducerTestingFileString(ClassCaseName, camelCaseName)
+    ],
+    [
+      path + '/__tests__/selectors.spec.ts',
+      createSelectorsTestingFileString(ClassCaseName, camelCaseName)
+    ],
+    [
+      path + '/__tests__/utils.spec.ts',
+      createUtilTestingFileString(ClassCaseName, camelCaseName)
+    ]
+  ];
+  files.forEach(async args =>
+    fs.writeFile(args[0], args[1], () => {
+      console.log('Wrote: ' + args[0]);
+    })
+  );
+})();

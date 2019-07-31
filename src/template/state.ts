@@ -1,7 +1,9 @@
-export default () =>`
-import { State } from './types';
+export default (
+  ClassCase: string,
+  camelCase: string
+) =>`import { ${ClassCase}State } from './types';
 
-export const defaultState: State = [];
+export const default${ClassCase}State: ${ClassCase}State = [];
 
-export default defaultState;
+export default default${ClassCase}State;
 `

@@ -3,15 +3,14 @@ export default (
   camelCase: string
 ) => `import { ActionType } from 'typesafe-actions';
 
-import { actions } from '../index';
+import { actions } from './index';
 
-export type ${ClassCase} = {
+export interface ${ClassCase} {
   id: number;
-  completed: boolean;
-  ${camelCase}Text: string;
-};
+  active: boolean;
+}
 
-export type State = ${ClassCase}[];
+export type  ${ClassCase}State = ${ClassCase}[];
 
 export type ${ClassCase}Actions = ActionType<typeof actions>;
 `;

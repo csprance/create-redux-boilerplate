@@ -1,36 +1,35 @@
 {
   "name": "create-redux-boilerplate",
-  "version": "1.0.3",
+  "version": "3.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "author": "Chris Sprance <chrissprance@gmail.com>",
   "license": "MIT",
   "bin": {
     "create-redux-boilerplate": "dist/index.js"
   },
   "scripts": {
-    "dev": "ts-node src --name testFeature",
+    "dev": "ts-node src",
     "cleanup": "rimraf dist",
     "build": "npm run cleanup && tsc --module commonjs",
-    "prepublish": "npm run build",
-    "test-installed-version": "create-redux-boilerplate --name featureTest",
+    "test-installed-version": "create-redux-boilerplate",
     "lint": "tslint --project tsconfig.json --force"
   },
   "devDependencies": {
-    "@types/commander": "^2.12.2",
-    "@types/node": "^10.12.19",
+    "@types/inquirer": "^6.5.0",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^12.6.8",
     "rimraf": "^2.6.3",
-    "ts-node": "^8.0.2",
-    "tslint": "^5.12.1",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.4.0-dev.20190129"
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "change-case": "^3.1.0",
-    "commander": "^2.19.0",
-    "create-redux-boilerplate": "^1.0.2"
+    "inquirer": "^6.5.0",
+    "mkdirp": "^0.5.1",
+    "tslib": "^1.10.0"
   }
 }
